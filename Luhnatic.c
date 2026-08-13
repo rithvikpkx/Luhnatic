@@ -41,6 +41,28 @@ int validate_num(long num) {
     }
 }
 
+void explain(long num) {
+    printf("Original Number: %ld\n", num);
+
+    printf("Starting from right: ");
+    long n_copy = num;
+    while (n_copy) {
+        printf("%ld ", n_copy % 10);
+
+        n_copy /= 10;
+    }
+    printf("\n");
+
+    int valid_num = validate_num(num);
+
+    if (valid_num) {
+        printf("---VALID LUHN NUM: %ld---\n", num);
+    }
+    else {
+        printf("---INVALID LUHN NUM: %ld---\n", num);
+    }
+}
+
 int main (int argv, char *argc[]) {
     if (argv <= 2 || argv > 3) {
         printf("USAGE:\n\
@@ -51,10 +73,10 @@ int main (int argv, char *argc[]) {
         return BAD_CLI_INVOCATION;
     }
 
-    if (strcmp(argc[1], "validate") == 0) {
-        char *endptr = NULL;
-        long num = strtol(argc[2], &endptr, 10);
+    char *endptr = NULL;
+    long num = strtol(argc[2], &endptr, 10);
 
+    if (strcmp(argc[1], "validate") == 0) {
         if (endptr == argc[2] || *endptr != '\0') {
             printf("INVALID\n");
             printf("USAGE: ./Luhnatic validate <num>\n");
@@ -75,7 +97,7 @@ int main (int argv, char *argc[]) {
         printf("generate branch\n");
     }
     else if (strcmp(argc[1], "explain") == 0) {
-        printf("explain branch\n");
+        explain(num);
     }
     else {
         printf("USAGE:\n\
