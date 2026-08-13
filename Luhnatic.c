@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #define BAD_CLI_INVOCATION (1)
+#define SUCCESS (0)
 
 int validate_num(long num) {
     int sum = 0;
@@ -57,6 +58,7 @@ int main (int argv, char *argc[]) {
         if (endptr == argc[2] || *endptr != '\0') {
             printf("INVALID\n");
             printf("USAGE: ./Luhnatic validate <num>\n");
+            return BAD_CLI_INVOCATION;
         }
         else {
             int valid_num = validate_num(num);
@@ -84,5 +86,5 @@ int main (int argv, char *argc[]) {
         return BAD_CLI_INVOCATION;
     }
 
-    return 0;
+    return SUCCESS;
 }
