@@ -153,9 +153,9 @@ int main (int argc, char *argv[]) {
     }
     else {
         printf("USAGE:\n\
-                ./Luhnatic validate <16 digit num>\n\
+                ./Luhnatic validate <num>\n\
                 ./Luhnatic generate <length>\n\
-                ./Luhnatic explain <16 digit num>\n");
+                ./Luhnatic explain <num>\n");
 
         return BAD_CLI_INVOCATION;
     }
