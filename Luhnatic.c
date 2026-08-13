@@ -113,8 +113,8 @@ void explain(long num) {
     }
 }
 
-int main (int argv, char *argc[]) {
-    if (argv <= 2 || argv > 3) {
+int main (int argc, char *argv[]) {
+    if (argc <= 2 || argc > 3) {
         printf("USAGE:\n\
                 ./Luhnatic validate <num>\n\
                 ./Luhnatic generate <length>\n\
@@ -124,15 +124,18 @@ int main (int argv, char *argc[]) {
     }
 
     char *endptr = NULL;
-    long num = strtol(argc[2], &endptr, 10);
+    long num = strtol(argv[2], &endptr, 10);
 
-    if (endptr == argc[2] || *endptr != '\0') {
+    if (endptr == argv[2] || *endptr != '\0') {
         printf("INVALID\n");
-        printf("USAGE: ./Luhnatic validate <num>\n");
+        printf("USAGE:\n\
+                ./Luhnatic validate <num>\n\
+                ./Luhnatic generate <length>\n\
+                ./Luhnatic explain <num>\n");
         return BAD_CLI_INVOCATION;
     }
 
-    if (strcmp(argc[1], "validate") == 0) {
+    if (strcmp(argv[1], "validate") == 0) {
         int valid_num = validate_num(num);
 
         if (valid_num) {
@@ -142,10 +145,10 @@ int main (int argv, char *argc[]) {
             printf("---INVALID LUHN NUM: %ld---\n", num);
         }
     }
-    else if (strcmp(argc[1], "generate") == 0) {
+    else if (strcmp(argv[1], "generate") == 0) {
         printf("generate branch\n");
     }
-    else if (strcmp(argc[1], "explain") == 0) {
+    else if (strcmp(argv[1], "explain") == 0) {
         explain(num);
     }
     else {
