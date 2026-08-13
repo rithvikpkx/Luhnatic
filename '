@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define BAD_CLI_INVOCATION (1)
-
 int main (int argv, char *argc[]) {
     if (argv <= 2) {
         printf("USAGE:\n\
@@ -10,7 +8,7 @@ int main (int argv, char *argc[]) {
                 ./Luhnatic generate <length>\n\
                 ./Luhnatic explain <16 digit num>\n");
 
-        return BAD_CLI_INVOCATION;
+        return;
     }
 
     if (strcmp(argc[1], "validate") == 0) {
@@ -27,8 +25,6 @@ int main (int argv, char *argc[]) {
                 ./Luhnatic validate <16 digit num>\n\
                 ./Luhnatic generate <length>\n\
                 ./Luhnatic explain <16 digit num>\n");
-
-        return BAD_CLI_INVOCATION;
     }
 
     return 0;
