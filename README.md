@@ -6,7 +6,7 @@
 
 `C` · `Luhn Algorithm` · `Checksums` · `CLI` · `Input Validation` · `String Processing` · `Modular Arithmetic` · `Command-Line Tools`
 
-[Luhn's Algorithm Stripe Article](https://stripe.com/en-it/resources/more/how-to-use-the-luhn-algorithm-a-guide-in-applications-for-businesses)
+[Luhn's Algorithm Stripe Article](https://stripe.com/resources/more/how-to-use-the-luhn-algorithm-a-guide-in-applications-for-businesses)
 
 ## Functionality / Usage
 
