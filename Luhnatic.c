@@ -42,7 +42,8 @@ int validate_num(long num) {
 }
 
 void explain(long num) {
-    printf("Original Number: %ld\n", num);
+    long og_num = num;
+    printf("Original Number: %ld\n", og_num);
 
     printf("Starting from right: ");
     long n_copy = num;
@@ -51,15 +52,64 @@ void explain(long num) {
 
         n_copy /= 10;
     }
+    printf("\n\n");
+
+    int sum = 0;
+    int sum_digit = 0;
+
+    printf("Start running sum at 0: sum(0)\n");
+
+    while (num) {
+        if (sum_digit == 0) {
+            printf("Non doubled digit: %ld\n", num % 10);
+            printf("Add digit to sum:  sum(%d) + digit(%ld) = sum(%ld)\n", sum, num % 10, sum + (num % 10));
+
+            sum += num % 10;
+            num /= 10;
+            sum_digit = 1;
+        }
+        else {
+            printf("To be doubled digit: %ld\n", num % 10);
+            int doubled = (num % 10) * 2;
+            printf("Doubled digit: %d\n", doubled);
+            printf("\n");
+
+            if (doubled > 9) {
+                printf("Doubled digit yields a two digit product: %d\n", doubled);
+
+                printf("Add individual digit to sum: sum(%d) + digit(%d) = sum(%d)\n", sum, doubled % 10, sum + (doubled % 10));
+                sum += doubled % 10;
+                doubled /= 10;
+                printf("Add individual digit to sum: sum(%d) + digit(%d) = sum(%d)\n", sum, doubled, sum + doubled);
+                sum += doubled;
+            }
+            else {
+                printf("Add doubled digit to sum: sum(%d) + digit(%d) = sum(%d)\n", sum, doubled, sum + doubled);
+                sum += doubled;
+            }
+
+            sum_digit = 0;
+            num /= 10;
+        }
+        printf("------------------------\n");
+    }
+
     printf("\n");
 
-    int valid_num = validate_num(num);
-
-    if (valid_num) {
-        printf("---VALID LUHN NUM: %ld---\n", num);
+    if (sum % 10 == 0) {
+        printf("sum(%d) %% 10 == 0\n", sum);
     }
     else {
-        printf("---INVALID LUHN NUM: %ld---\n", num);
+        printf("sum(%d) %% 10 != 0\n", sum);
+    }
+
+    int valid_num = validate_num(og_num);
+
+    if (valid_num) {
+        printf("---VALID LUHN NUM: %ld---\n", og_num);
+    }
+    else {
+        printf("---INVALID LUHN NUM: %ld---\n", og_num);
     }
 }
 
