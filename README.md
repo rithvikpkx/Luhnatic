@@ -27,11 +27,11 @@ The CLI has three basic operations:
 
 - `explain` --> shows how the checksum is calculated for a given number in detail
 
-> [!QUESTION]
-> Why did I build this?
-> 
-> Whenever I typed in a random number into credit card fields, I always wondered how they were able to immediately invalidate it.
-> After a bit of research I found out about Luhn's Algorithm and I wanted to build a cool little tool for fun.
-> So, in short, for fun!
+## Why did I build this?
+
+Whenever I typed in a random number into credit card fields, I always wondered how they were able to immediately invalidate it.
+After a bit of research I found out about Luhn's Algorithm and I wanted to build a cool little tool for fun.
+
+**So, in short, I made it for fun!**
 
 
