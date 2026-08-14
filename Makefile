@@ -7,7 +7,7 @@ luhnatic: cli_main.o luhnatic.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 %.o: %.c luhnatic.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $<
 
 clean:
 	rm -f luhnatic *.o

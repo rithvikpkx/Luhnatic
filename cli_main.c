@@ -29,7 +29,7 @@ static const struct command_info COMMANDS[] = {
     {CMD_EXPLAIN, "explain", "<number>"}
 };
 
-static enum command parse_arg(char *arg) {
+static enum command parse_command(char *arg) {
     for (size_t i = 0; i < sizeof(COMMANDS) / sizeof(COMMANDS[0]); i++) {
         if (strcmp(arg, COMMANDS[i].name) == 0) {
             return COMMANDS[i].command;
@@ -53,9 +53,17 @@ int main(int argc, char *argv[]) {
         return BAD_CLI_INVOCATION;
     }
 
-    // TODO change parsing logic
+    enum command command = parse_command(argv[1]);
+
+    if (command == CMD_INVALID) {
+        printf("INVALID COMMAND\n");
+        print_usage();
+        return BAD_CLI_INVOCATION;
+    }
+
+    // TODO change parsing logic to not be limited by long overflow
     char *endptr = NULL;
-    long num = strtol(argv[2], &endptr, 10);
+    long arg = strtol(argv[2], &endptr, 10);
 
     if (endptr == argv[2] || *endptr != '\0') {
         printf("INVALID ARGUMENT\n");
@@ -63,34 +71,26 @@ int main(int argc, char *argv[]) {
         return BAD_CLI_INVOCATION;
     }
 
-    enum command command = parse_arg(argv[1]);
+    if (command == CMD_VALIDATE) {
+        int valid = validate(arg);
 
-    if (command == CMD_INVALID) {
-        printf("INVALID COMMAND\n");
-        print_usage();
-        return BAD_CLI_INVOCATION;
+        if (valid) {
+            printf("VALID LUHN NUM: %ld\n", arg);
+            return VALID;
+        }
+        else {
+            printf("INVALID LUHN NUM: %ld\n", arg);
+            return INVALID;
+        }
     }
-    else {
-        if (command == CMD_VALIDATE) {
-            int valid = validate(num);
-
-            if (valid) {
-                printf("VALID LUHN NUM: %ld\n", num);
-                return VALID;
-            }
-            else {
-                printf("INVALID LUHN NUM: %ld\n", num);
-                return INVALID;
-            }
-        }
-        else if (command == CMD_GENERATE) {
-            long generated_num = generate(num);
-            printf("GENERATED LUHN NUM: %ld\n", generated_num);
-            return GENERATED;
-        }
-        else if (command == CMD_EXPLAIN) {
-            explain(num);
-            return EXPLAINED;
-        }
+    else if (command == CMD_GENERATE) {
+        long generated_num = generate(arg);
+        printf("GENERATED LUHN NUM: %ld\n", generated_num);
+        return GENERATED;
+    }
+    else if (command == CMD_EXPLAIN) {
+        // TODO update implementation to handle new interface handling
+        explain(arg);
+        return EXPLAINED;
     }
 }
