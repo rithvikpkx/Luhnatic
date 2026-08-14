@@ -10,12 +10,12 @@
  *
  * The number is valid if the resulting sum of digits is divisible by 10.
  *
- * @brief Validates the given num using Luhn's Algorithm
+ * @brief Validates the given num string using Luhn's Algorithm
  *
- * @param num The num to be validated
- * @return 1 if valid Luhn num or 0 if invalid Luhn num.
+ * @param num_str String of num to be validated
+ * @return 1 if valid Luhn num, 0 if invalid Luhn num, and -1 if bad input string @p num_string
  */
-int validate(long num);
+int validate(char *num_str);
 
 /**
  * Generates a valid Luhn number of the desired length.
@@ -28,10 +28,11 @@ int validate(long num);
 long generate(int len);
 
 /**
- * Prints out the full process of Luhn's Algorithm given a number to explain it.
+ * Returns a string with the full process of Luhn's Algorithm given a number string to help explain it.
  *
- * @param num The num to be validated and explained.
+ * @param num_str String of num to be validated
+ * @return A string with the full explanation of Luhn's Algorithm on input
  */
-void explain(long num);
+char *explain(char *num_str);
 
 #endif

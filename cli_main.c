@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #define SUCCESS (0)
-#define BAD_CLI_INVOCATION (-1)
+#define BAD_CLI_INVOCATION (1)
 
 typedef enum command {
     CMD_VALIDATE,
@@ -58,34 +58,27 @@ int main(int argc, char *argv[]) {
         return BAD_CLI_INVOCATION;
     }
 
-    // TODO change parsing logic to not be limited by long overflow
-    char *endptr = NULL;
-    long arg = strtol(argv[2], &endptr, 10);
-
-    if (endptr == argv[2] || *endptr != '\0') {
-        printf("INVALID ARGUMENT\n");
-        print_usage();
-        return BAD_CLI_INVOCATION;
-    }
-
     if (command == CMD_VALIDATE) {
-        int valid = validate(arg);
+        int valid = validate(argv[2]);
 
-        if (valid) {
-            printf("VALID LUHN NUM: %ld\n", arg);
+        if (valid == 1) {
+            printf("VALID LUHN NUM: %s\n", argv[2]);
+        }
+        else if (valid == 0) {
+            printf("INVALID LUHN NUM: %s\n", argv[2]);
         }
         else {
-            printf("INVALID LUHN NUM: %ld\n", arg);
+            printf("BAD ARGUMENT\n");
+            print_usage();
+            return BAD_CLI_INVOCATION;
         }
-
     }
     else if (command == CMD_GENERATE) {
-        long generated_num = generate(arg);
-        printf("GENERATED LUHN NUM: %ld\n", generated_num);
+        printf("GENERATED LUHN NUM: \n");
     }
     else if (command == CMD_EXPLAIN) {
         // TODO update implementation to handle new interface handling
-        explain(arg);
+        explain(argv[2]);
     }
 
     return SUCCESS;

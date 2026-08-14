@@ -1,24 +1,34 @@
 #include "luhnatic.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #define VALID (1)
 #define INVALID (0)
+#define BAD_INPUT (-1)
 
-// TODO change to use array based implementation to avoid overflow limitation
-int validate(long num) {
+int validate(char *num_str) {
+    if (!num_str) {
+        return BAD_INPUT;
+    }
+
+    int len = strlen(num_str);
+    if (len == 0) {
+        return BAD_INPUT;
+    }
+
     int sum = 0;
+    int double_digit = 0;
 
-    int sum_digit = 0;
-
-    while (num) {
-        if (sum_digit == 0) {
-            sum += num % 10;
-            num /= 10;
-            sum_digit = 1;
+    for (int i = len - 1; i >= 0; i--) {
+        if (num_str[i] < '0' || num_str[i] > '9') {
+            return BAD_INPUT;
         }
-        else {
-            int doubled = (num % 10) * 2;
+
+        int digit = num_str[i] - '0';
+
+        if (double_digit) {
+            int doubled = digit * 2;
 
             if (doubled > 9) {
                 sum += doubled % 10;
@@ -29,8 +39,11 @@ int validate(long num) {
                 sum += doubled;
             }
 
-            sum_digit = 0;
-            num /= 10;
+            double_digit = 0;
+        }
+        else {
+            sum += digit;
+            double_digit = 1;
         }
     }
 
@@ -43,7 +56,9 @@ int validate(long num) {
 }
 
 // TODO Change implementation to be friendly to interface structure
-void explain(long num) {
+char *explain(char *num_str) {
+    return num_str;
+    /*
     long og_num = num;
     printf("Original Number: %ld\n", og_num);
 
@@ -113,6 +128,7 @@ void explain(long num) {
     else {
         printf("---INVALID LUHN NUM: %ld---\n", og_num);
     }
+    */
 }
 
 // TODO implement
