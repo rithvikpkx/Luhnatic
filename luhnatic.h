@@ -32,7 +32,6 @@ long generate(int len);
  *
  * @param num The num to be validated and explained.
  */
-
 void explain(long num);
 
 #endif

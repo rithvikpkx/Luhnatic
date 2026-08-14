@@ -4,18 +4,15 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define VALID (0)
-#define INVALID (1)
-#define GENERATED (2)
-#define EXPLAINED (3)
+#define SUCCESS (0)
 #define BAD_CLI_INVOCATION (-1)
 
-enum command {
+typedef enum command {
     CMD_VALIDATE,
     CMD_GENERATE,
     CMD_EXPLAIN,
     CMD_INVALID
-};
+} command_t;
 
 struct command_info {
     enum command command;
@@ -29,7 +26,7 @@ static const struct command_info COMMANDS[] = {
     {CMD_EXPLAIN, "explain", "<number>"}
 };
 
-static enum command parse_command(char *arg) {
+static command_t parse_command(char *arg) {
     for (size_t i = 0; i < sizeof(COMMANDS) / sizeof(COMMANDS[0]); i++) {
         if (strcmp(arg, COMMANDS[i].name) == 0) {
             return COMMANDS[i].command;
@@ -53,7 +50,7 @@ int main(int argc, char *argv[]) {
         return BAD_CLI_INVOCATION;
     }
 
-    enum command command = parse_command(argv[1]);
+    command_t command = parse_command(argv[1]);
 
     if (command == CMD_INVALID) {
         printf("INVALID COMMAND\n");
@@ -76,21 +73,20 @@ int main(int argc, char *argv[]) {
 
         if (valid) {
             printf("VALID LUHN NUM: %ld\n", arg);
-            return VALID;
         }
         else {
             printf("INVALID LUHN NUM: %ld\n", arg);
-            return INVALID;
         }
+
     }
     else if (command == CMD_GENERATE) {
         long generated_num = generate(arg);
         printf("GENERATED LUHN NUM: %ld\n", generated_num);
-        return GENERATED;
     }
     else if (command == CMD_EXPLAIN) {
         // TODO update implementation to handle new interface handling
         explain(arg);
-        return EXPLAINED;
     }
+
+    return SUCCESS;
 }
