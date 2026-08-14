@@ -77,8 +77,7 @@ int main(int argc, char *argv[]) {
         printf("GENERATED LUHN NUM: \n");
     }
     else if (command == CMD_EXPLAIN) {
-        // TODO update implementation to handle new interface handling
-        explain(argv[2]);
+        explain(argv[2], stdout);
     }
 
     return SUCCESS;

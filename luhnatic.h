@@ -1,6 +1,8 @@
 #ifndef LUHNATIC_H
 #define LUHNATIC_H
 
+#include <stdio.h>
+
 // Function Declarations
 
 /**
@@ -28,11 +30,11 @@ int validate(char *num_str);
 long generate(int len);
 
 /**
- * Returns a string with the full process of Luhn's Algorithm given a number string to help explain it.
+ * Writes the full explanation/process of Luhn's Algorithm given a num string to a file.
  *
  * @param num_str String of num to be validated
- * @return A string with the full explanation of Luhn's Algorithm on input
+ * @return 0 on success, 1 on failure, -1 on bad input
  */
-char *explain(char *num_str);
+int explain(char *num_str, FILE *fp);
 
 #endif

@@ -7,6 +7,9 @@
 #define INVALID (0)
 #define BAD_INPUT (-1)
 
+#define SUCCESS (0)
+#define FAILURE (1)
+
 int validate(char *num_str) {
     if (!num_str) {
         return BAD_INPUT;
@@ -56,79 +59,96 @@ int validate(char *num_str) {
 }
 
 // TODO Change implementation to be friendly to interface structure
-char *explain(char *num_str) {
-    return num_str;
-    /*
-    long og_num = num;
-    printf("Original Number: %ld\n", og_num);
-
-    printf("Starting from right: ");
-    long n_copy = num;
-    while (n_copy) {
-        printf("%ld ", n_copy % 10);
-
-        n_copy /= 10;
+int explain(char *num_str, FILE *fp) {
+    if (!num_str || !fp) {
+        return BAD_INPUT;
     }
-    printf("\n\n");
+
+    int len = strlen(num_str);
+    if (len == 0) {
+        return BAD_INPUT;
+    }
+
+    fwrite("", 1, 0, fp);
+
+    if (ferror(fp)) {
+        clearerr(fp);
+        return FAILURE;
+    }
+
+    for (int i = 0; i < len; i++) {
+        if (num_str[i] < '0' || num_str[i] > '9') {
+            return BAD_INPUT;
+        }
+    }
 
     int sum = 0;
-    int sum_digit = 0;
 
-    printf("Start running sum at 0: sum(0)\n");
+    fprintf(fp, "Number: %s\n", num_str);
+    fprintf(fp, "Start running sum at 0: sum(%d)\n", sum);
+    fprintf(fp, "Start from the rightmost digit and move leftward\n\n");
 
-    while (num) {
-        if (sum_digit == 0) {
-            printf("Non doubled digit: %ld\n", num % 10);
-            printf("Add digit to sum:  sum(%d) + digit(%ld) = sum(%ld)\n", sum, num % 10, sum + (num % 10));
+    int double_digit = 0;
 
-            sum += num % 10;
-            num /= 10;
-            sum_digit = 1;
-        }
-        else {
-            printf("To be doubled digit: %ld\n", num % 10);
-            int doubled = (num % 10) * 2;
-            printf("Doubled digit: %d\n", doubled);
-            printf("\n");
+    for (int i = len - 1; i >= 0; i--) {
+        fprintf(fp, "---\n");
+        fprintf(fp, "Current Digit: %c\n", num_str[i]);
+
+        int digit = num_str[i] - '0';
+
+        if (double_digit) {
+            fprintf(fp, "Double Digit\n");
+
+            int doubled = digit * 2;
+
+            fprintf(fp, "Double: digit(%d) * 2 = %d\n", digit, doubled);
 
             if (doubled > 9) {
-                printf("Doubled digit yields a two digit product: %d\n", doubled);
+                fprintf(fp, "Multi Digit Product: digit product(%d). Sum the individual digits.\n", doubled);
 
-                printf("Add individual digit to sum: sum(%d) + digit(%d) = sum(%d)\n", sum, doubled % 10, sum + (doubled % 10));
-                sum += doubled % 10;
+                int digit_sum = 0;
+
+                digit_sum += doubled % 10;
                 doubled /= 10;
-                printf("Add individual digit to sum: sum(%d) + digit(%d) = sum(%d)\n", sum, doubled, sum + doubled);
-                sum += doubled;
+                digit_sum += doubled;
+
+
+                fprintf(fp, "Summed digits: %d\n", digit_sum);
+
+                fprintf(fp, "Add to sum: sum(%d) = sum(%d) + summed digits(%d)\n", sum + digit_sum, sum, digit_sum);
+
+                sum += digit_sum;
             }
             else {
-                printf("Add doubled digit to sum: sum(%d) + digit(%d) = sum(%d)\n", sum, doubled, sum + doubled);
+                fprintf(fp, "Single Digit Product\n");
+                fprintf(fp, "Add to sum: sum(%d) = sum(%d) + summed digits(%d)\n", sum + doubled, sum, doubled);
                 sum += doubled;
             }
 
-            sum_digit = 0;
-            num /= 10;
+            double_digit = 0;
         }
-        printf("------------------------\n");
+        else {
+            fprintf(fp, "Non Double Digit\n");
+            fprintf(fp, "Add to sum: sum(%d) = sum(%d) + digit(%d)\n", sum + digit, sum, digit);
+            sum += digit;
+            double_digit = 1;
+        }
     }
 
-    printf("\n");
+    fprintf(fp, "---\n");
+    fprintf(fp, "Final Sum: %d\n", sum);
 
     if (sum % 10 == 0) {
-        printf("sum(%d) %% 10 == 0\n", sum);
+        fprintf(fp, "sum(%d) %% 10 == 0\n", sum);
+        fprintf(fp, "VALID LUHN NUMBER\n");
+        return VALID;
     }
     else {
-        printf("sum(%d) %% 10 != 0\n", sum);
+        fprintf(fp, "sum(%d) %% 10 != 0\n", sum);
+        fprintf(fp, "INVALID LUHN NUMBER\n");
+        return INVALID;
     }
 
-    int valid_num = validate(og_num);
-
-    if (valid_num) {
-        printf("---VALID LUHN NUM: %ld---\n", og_num);
-    }
-    else {
-        printf("---INVALID LUHN NUM: %ld---\n", og_num);
-    }
-    */
 }
 
 // TODO implement
