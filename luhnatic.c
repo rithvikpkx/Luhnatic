@@ -42,7 +42,7 @@ int validate(long num) {
     }
 }
 
-// TODO Change to be friendly to interface
+// TODO Change implementation to be friendly to interface structure
 void explain(long num) {
     long og_num = num;
     printf("Original Number: %ld\n", og_num);
