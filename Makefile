@@ -1,5 +1,13 @@
-CFLAGS = -Werror -Wall -Wextra -Wpedantic -std=c17
+CC = gcc
+CFLAGS = -std=c17 -Wall -Wextra -Wpedantic -Werror -g
 
-Luhnatic: Luhnatic.c
-	gcc $(CFLAGS) $^ -o $@
+all: luhnatic
 
+luhnatic: cli_main.o luhnatic.o
+	$(CC) $(CFLAGS) $^ -o $@
+
+%.o: %.c luhnatic.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f luhnatic *.o

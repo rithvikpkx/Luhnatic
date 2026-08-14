@@ -1,11 +1,12 @@
+#include "luhnatic.h"
+
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
-#define BAD_CLI_INVOCATION (1)
-#define SUCCESS (0)
+#define VALID (1)
+#define INVALID (0)
 
-int validate_num(long num) {
+// TODO change to use array based implementation to avoid overflow limitation
+int validate(long num) {
     int sum = 0;
 
     int sum_digit = 0;
@@ -34,13 +35,14 @@ int validate_num(long num) {
     }
 
     if (sum % 10 == 0) {
-        return 1;
+        return VALID;
     }
     else {
-        return 0;
+        return INVALID;
     }
 }
 
+// TODO Change to be friendly to interface
 void explain(long num) {
     long og_num = num;
     printf("Original Number: %ld\n", og_num);
@@ -103,7 +105,7 @@ void explain(long num) {
         printf("sum(%d) %% 10 != 0\n", sum);
     }
 
-    int valid_num = validate_num(og_num);
+    int valid_num = validate(og_num);
 
     if (valid_num) {
         printf("---VALID LUHN NUM: %ld---\n", og_num);
@@ -113,52 +115,8 @@ void explain(long num) {
     }
 }
 
-int main (int argc, char *argv[]) {
-    if (argc <= 2 || argc > 3) {
-        printf("USAGE:\n\
-                ./Luhnatic validate <num>\n\
-                ./Luhnatic generate <length>\n\
-                ./Luhnatic explain <num>\n");
-
-        return BAD_CLI_INVOCATION;
-    }
-
-    char *endptr = NULL;
-    long num = strtol(argv[2], &endptr, 10);
-
-    if (endptr == argv[2] || *endptr != '\0') {
-        printf("INVALID\n");
-        printf("USAGE:\n\
-                ./Luhnatic validate <num>\n\
-                ./Luhnatic generate <length>\n\
-                ./Luhnatic explain <num>\n");
-        return BAD_CLI_INVOCATION;
-    }
-
-    if (strcmp(argv[1], "validate") == 0) {
-        int valid_num = validate_num(num);
-
-        if (valid_num) {
-            printf("---VALID LUHN NUM: %ld---\n", num);
-        }
-        else {
-            printf("---INVALID LUHN NUM: %ld---\n", num);
-        }
-    }
-    else if (strcmp(argv[1], "generate") == 0) {
-        printf("generate branch\n");
-    }
-    else if (strcmp(argv[1], "explain") == 0) {
-        explain(num);
-    }
-    else {
-        printf("USAGE:\n\
-                ./Luhnatic validate <num>\n\
-                ./Luhnatic generate <length>\n\
-                ./Luhnatic explain <num>\n");
-
-        return BAD_CLI_INVOCATION;
-    }
-
-    return SUCCESS;
+// TODO implement
+long generate(int len) {
+    return len;
 }
+
