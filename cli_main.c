@@ -74,7 +74,8 @@ int main(int argc, char *argv[]) {
         }
     }
     else if (command == CMD_GENERATE) {
-        printf("GENERATED LUHN NUM: \n");
+        printf("reached command gen\n");
+        generate(atoi(argv[2]), stdout);
     }
     else if (command == CMD_EXPLAIN) {
         explain(argv[2], stdout);
