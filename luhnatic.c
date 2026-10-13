@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define VALID (1)
 #define INVALID (0)
@@ -152,7 +154,35 @@ int explain(char *num_str, FILE *fp) {
 }
 
 // TODO implement
-long generate(int len) {
-    return len;
+int generate(int len, FILE *fp) {
+    srand(time(NULL));
+
+    int digit_arr[len];
+
+    int running_sum = 0;
+    int double_digit = 1;
+
+    for (int i = 0; i < len - 1; i++) {
+        int random_digit = rand() % 10;
+        digit_arr[i + 1] = random_digit;
+
+        if (double_digit) {
+            running_sum += random_digit * 2;
+            double_digit = 0;
+        }
+        else {
+            double_digit = 1;
+        }
+    }
+
+    digit_arr[0] = running_sum % 10;
+
+    fprintf(fp, "Generated Luhn Num: ");
+    for (int i = 0; i < len; i++) {
+        fprintf(fp, "%d", digit_arr[i]);
+    }
+    fprintf(fp, "\n");
+
+    return SUCCESS;
 }
 

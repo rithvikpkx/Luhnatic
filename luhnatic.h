@@ -27,7 +27,7 @@ int validate(char *num_str);
  * @param len The length of the desired valid Luhn number
  * @return A valid luhn number of length @p len
  */
-long generate(int len);
+int generate(int len, FILE *fp);
 
 /**
  * Writes the full explanation/process of Luhn's Algorithm given a num string to a file.
