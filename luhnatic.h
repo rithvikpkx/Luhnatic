@@ -15,7 +15,8 @@
  * @brief Validates the given num string using Luhn's Algorithm
  *
  * @param num_str String of num to be validated
- * @return 1 if valid Luhn num, 0 if invalid Luhn num, and -1 if bad input string @p num_string
+ * @return 1 if valid Luhn num, 0 if invalid Luhn num, and -1 if bad input
+ * string @p num_string
  */
 int validate(char *num_str);
 
@@ -30,7 +31,8 @@ int validate(char *num_str);
 int generate(long len, FILE *fp);
 
 /**
- * Writes the full explanation/process of Luhn's Algorithm given a num string to a file.
+ * Writes the full explanation/process of Luhn's Algorithm given a num string to
+ * a file.
  *
  * @param num_str String of num to be validated
  * @return 0 on success, 1 on failure, -1 on bad input
