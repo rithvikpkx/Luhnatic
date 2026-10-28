@@ -145,11 +145,15 @@ int explain(char *num_str, FILE *fp, bool *is_valid) {
   if (sum % 10 == 0) {
     fprintf(fp, "sum(%d) %% 10 == 0\n", sum);
     fprintf(fp, "VALID LUHN NUMBER\n");
-    *is_valid = true;
+    if (is_valid) {
+      *is_valid = true;
+    }
   } else {
     fprintf(fp, "sum(%d) %% 10 != 0\n", sum);
     fprintf(fp, "INVALID LUHN NUMBER\n");
-    *is_valid = false;
+    if (is_valid) {
+      *is_valid = false;
+    }
   }
 
   return SUCCESS;

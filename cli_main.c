@@ -1,5 +1,6 @@
 #include "luhnatic.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,7 +24,8 @@ struct command_info {
 static const struct command_info COMMANDS[] = {
     {CMD_VALIDATE, "validate", "<number>"},
     {CMD_GENERATE, "generate", "<length>"},
-    {CMD_EXPLAIN, "explain", "<number>"}};
+    {CMD_EXPLAIN, "explain", "<number>"},
+};
 
 static command_t parse_command(char *arg) {
   for (size_t i = 0; i < sizeof(COMMANDS) / sizeof(COMMANDS[0]); i++) {
@@ -73,7 +75,7 @@ int main(int argc, char *argv[]) {
     printf("reached command gen\n");
     generate(atoi(argv[2]), stdout);
   } else if (command == CMD_EXPLAIN) {
-    explain(argv[2], stdout);
+    explain(argv[2], stdout, NULL /* is_valid not needed */);
   }
 
   return SUCCESS;
