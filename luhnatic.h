@@ -4,6 +4,14 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#define VALID (1)
+#define INVALID (0)
+
+#define BAD_INPUT (-1)
+
+#define SUCCESS (0)
+#define FAILURE (1)
+
 // Function Declarations
 
 /**

@@ -6,14 +6,6 @@
 #include <string.h>
 #include <time.h>
 
-#define VALID (1)
-#define INVALID (0)
-
-#define BAD_INPUT (-1)
-
-#define SUCCESS (0)
-#define FAILURE (1)
-
 int validate(char *num_str) {
   if (!num_str) {
     return BAD_INPUT;

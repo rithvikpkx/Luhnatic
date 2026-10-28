@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SUCCESS (0)
 #define BAD_CLI_INVOCATION (1)
 
 typedef enum command {
@@ -37,38 +36,38 @@ static command_t parse_command(char *arg) {
   return CMD_INVALID;
 }
 
-static void print_usage(void) {
-  printf("USAGE:\n");
+static void print_usage(FILE *fp) {
+  fprintf(fp, "USAGE:\n");
 
   for (size_t i = 0; i < sizeof(COMMANDS) / sizeof(COMMANDS[0]); i++) {
-    printf("    luhnatic %s %s\n", COMMANDS[i].name, COMMANDS[i].arg);
+    fprintf(fp, "    luhnatic %s %s\n", COMMANDS[i].name, COMMANDS[i].arg);
   }
 }
 
 int main(int argc, char *argv[]) {
   if (argc <= 2 || argc > 3) {
-    print_usage();
+    print_usage(stderr);
     return BAD_CLI_INVOCATION;
   }
 
   command_t command = parse_command(argv[1]);
 
   if (command == CMD_INVALID) {
-    printf("INVALID COMMAND\n");
-    print_usage();
+    fprintf(stderr, "INVALID COMMAND\n");
+    print_usage(stderr);
     return BAD_CLI_INVOCATION;
   }
 
   if (command == CMD_VALIDATE) {
     int valid = validate(argv[2]);
 
-    if (valid == 1) {
+    if (valid == VALID) {
       printf("VALID LUHN NUM: %s\n", argv[2]);
-    } else if (valid == 0) {
+    } else if (valid == INVALID) {
       printf("INVALID LUHN NUM: %s\n", argv[2]);
     } else {
-      printf("BAD ARGUMENT\n");
-      print_usage();
+      fprintf(stderr, "BAD ARGUMENT\n");
+      print_usage(stderr);
       return BAD_CLI_INVOCATION;
     }
   } else if (command == CMD_GENERATE) {
@@ -77,10 +76,13 @@ int main(int argc, char *argv[]) {
   } else if (command == CMD_EXPLAIN) {
     int ret_val = explain(argv[2], stdout, NULL /* is_valid not needed */);
 
-    if (ret_val == -1) {
-      printf("BAD ARGUMENT\n");
-    } else if (ret_val == 1) {
-      printf("FAILURE: Something went wrong with the file stream\n");
+    if (ret_val == BAD_INPUT) {
+      fprintf(stderr, "BAD ARGUMENT\n");
+      print_usage(stderr);
+      return BAD_CLI_INVOCATION;
+    } else if (ret_val == FAILURE) {
+      fprintf(stderr, "FAILURE: Something went wrong with the file stream\n");
+      return BAD_CLI_INVOCATION;
     }
   }
 
