@@ -59,7 +59,6 @@ int validate(char *num_str) {
   }
 }
 
-// TODO: Change implementation to be friendly to interface structure
 int explain(char *num_str, FILE *fp, bool *is_valid) {
   if (!num_str || !fp) {
     return BAD_INPUT;
@@ -69,8 +68,6 @@ int explain(char *num_str, FILE *fp, bool *is_valid) {
   if (len == 0) {
     return BAD_INPUT;
   }
-
-  fwrite("", 1, 0, fp);
 
   if (ferror(fp)) {
     clearerr(fp);

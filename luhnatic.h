@@ -37,7 +37,7 @@ int generate(long len, FILE *fp);
  *
  * @param num_str String of num to be validated
  * @param fp File pointer to output file
- * @param is_valid bool pointer that is set to valid or not
+ * @param is_valid bool pointer that is set to valid or not (may be null)
  * @return 0 on success, 1 on failure, -1 on bad input
  */
 int explain(char *num_str, FILE *fp, bool *is_valid);

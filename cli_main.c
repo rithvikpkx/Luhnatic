@@ -75,7 +75,13 @@ int main(int argc, char *argv[]) {
     printf("reached command gen\n");
     generate(atoi(argv[2]), stdout);
   } else if (command == CMD_EXPLAIN) {
-    explain(argv[2], stdout, NULL /* is_valid not needed */);
+    int ret_val = explain(argv[2], stdout, NULL /* is_valid not needed */);
+
+    if (ret_val == -1) {
+      printf("BAD ARGUMENT\n");
+    } else if (ret_val == 1) {
+      printf("FAILURE: Something went wrong with the file stream\n");
+    }
   }
 
   return SUCCESS;
