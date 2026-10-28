@@ -1,6 +1,7 @@
 #ifndef LUHNATIC_H
 #define LUHNATIC_H
 
+#include <stdbool.h>
 #include <stdio.h>
 
 // Function Declarations
@@ -31,12 +32,14 @@ int validate(char *num_str);
 int generate(long len, FILE *fp);
 
 /**
- * Writes the full explanation/process of Luhn's Algorithm given a num string to
- * a file.
+ * Writes the full explanation/process of Luhn's Algorithm
+ * given a num string to a passed in file stream.
  *
  * @param num_str String of num to be validated
+ * @param fp File pointer to output file
+ * @param is_valid bool pointer that is set to valid or not
  * @return 0 on success, 1 on failure, -1 on bad input
  */
-int explain(char *num_str, FILE *fp);
+int explain(char *num_str, FILE *fp, bool *is_valid);
 
 #endif

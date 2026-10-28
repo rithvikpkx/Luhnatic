@@ -1,5 +1,6 @@
 #include "luhnatic.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,6 +8,7 @@
 
 #define VALID (1)
 #define INVALID (0)
+
 #define BAD_INPUT (-1)
 
 #define SUCCESS (0)
@@ -57,8 +59,8 @@ int validate(char *num_str) {
   }
 }
 
-// TODO Change implementation to be friendly to interface structure
-int explain(char *num_str, FILE *fp) {
+// TODO: Change implementation to be friendly to interface structure
+int explain(char *num_str, FILE *fp, bool *is_valid) {
   if (!num_str || !fp) {
     return BAD_INPUT;
   }
@@ -143,15 +145,17 @@ int explain(char *num_str, FILE *fp) {
   if (sum % 10 == 0) {
     fprintf(fp, "sum(%d) %% 10 == 0\n", sum);
     fprintf(fp, "VALID LUHN NUMBER\n");
-    return VALID;
+    *is_valid = true;
   } else {
     fprintf(fp, "sum(%d) %% 10 != 0\n", sum);
     fprintf(fp, "INVALID LUHN NUMBER\n");
-    return INVALID;
+    *is_valid = false;
   }
+
+  return SUCCESS;
 }
 
-// TODO implement
+// TODO: implement
 int generate(long len, FILE *fp) {
   printf("entered gen\n");
   srand(time(NULL));
