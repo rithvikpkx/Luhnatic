@@ -11,7 +11,7 @@ typedef enum command {
   CMD_VALIDATE,
   CMD_GENERATE,
   CMD_EXPLAIN,
-  CMD_INVALID
+  CMD_INVALID,
 } command_t;
 
 struct command_info {
@@ -21,9 +21,9 @@ struct command_info {
 };
 
 static const struct command_info COMMANDS[] = {
-    {CMD_VALIDATE, "validate", "<number>"},
-    {CMD_GENERATE, "generate", "<length>"},
-    {CMD_EXPLAIN, "explain", "<number>"},
+  {CMD_VALIDATE, "validate", "<number>"},
+  {CMD_GENERATE, "generate", "<length>"},
+  {CMD_EXPLAIN, "explain", "<number>"},
 };
 
 static command_t parse_command(char *arg) {
@@ -71,7 +71,6 @@ int main(int argc, char *argv[]) {
       return BAD_CLI_INVOCATION;
     }
   } else if (command == CMD_GENERATE) {
-    printf("reached command gen\n");
     generate(atoi(argv[2]), stdout);
   } else if (command == CMD_EXPLAIN) {
     int ret_val = explain(argv[2], stdout, NULL /* is_valid not needed */);

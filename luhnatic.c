@@ -107,22 +107,23 @@ int explain(char *num_str, FILE *fp, bool *is_valid) {
 
         fprintf(fp, "Summed digits: %d\n", digit_sum);
 
-        fprintf(fp, "Add to sum: sum(%d) = sum(%d) + summed digits(%d)\n",
-                sum + digit_sum, sum, digit_sum);
+        fprintf(fp, "Add to sum: sum(%d) = sum(%d) + summed digits(%d)\n", sum + digit_sum, sum,
+                digit_sum);
 
         sum += digit_sum;
       } else {
         fprintf(fp, "Single Digit Product\n");
-        fprintf(fp, "Add to sum: sum(%d) = sum(%d) + summed digits(%d)\n",
-                sum + doubled, sum, doubled);
+        fprintf(fp, "Add to sum: sum(%d) = sum(%d) + summed digits(%d)\n", sum + doubled, sum,
+                doubled);
+
         sum += doubled;
       }
 
       double_digit = 0;
     } else {
       fprintf(fp, "Non Double Digit\n");
-      fprintf(fp, "Add to sum: sum(%d) = sum(%d) + digit(%d)\n", sum + digit,
-              sum, digit);
+      fprintf(fp, "Add to sum: sum(%d) = sum(%d) + digit(%d)\n", sum + digit, sum, digit);
+
       sum += digit;
       double_digit = 1;
     }
@@ -150,7 +151,6 @@ int explain(char *num_str, FILE *fp, bool *is_valid) {
 
 // TODO: implement
 int generate(long len, FILE *fp) {
-  printf("entered gen\n");
   srand(time(NULL));
 
   int *digit_arr = calloc((size_t)len, sizeof(int));
@@ -158,10 +158,7 @@ int generate(long len, FILE *fp) {
   int running_sum = 0;
   int double_digit = 1;
 
-  printf("Inited arr\n");
-
   for (int i = len - 2; i >= 0; i--) {
-    printf("entered for to gen digits\n");
     int random_digit = rand() % 10;
     digit_arr[i] = random_digit;
 
@@ -181,17 +178,13 @@ int generate(long len, FILE *fp) {
       double_digit = 1;
     }
   }
-  printf("Exited for\n");
 
   digit_arr[len - 1] = 10 - running_sum % 10;
 
-  fprintf(fp, "Generated Luhn Num: ");
   for (int i = 0; i < len; i++) {
     fprintf(fp, "%d", digit_arr[i]);
   }
   fprintf(fp, "\n");
-
-  printf("done\n");
 
   return SUCCESS;
 }
